@@ -97,3 +97,46 @@ def test_clean_markdown_drops_images_keeps_link_text():
     assert "fractional COO engagements" in cleaned
     assert "https://example.com/services/coo" not in cleaned
     assert "\n\n\n" not in cleaned
+
+
+# --- LinkedIn URL shape gating ------------------------------------------------
+
+import asyncio
+
+import pytest
+
+from app.clients.apify import scrape_linkedin
+
+
+def _scrape(url):
+    return asyncio.run(scrape_linkedin(None, url))
+
+
+@pytest.mark.parametrize(
+    "url",
+    [
+        "https://www.linkedin.com/company/kronos/",
+        "https://linkedin.com/school/harvard/",
+        "https://www.linkedin.com/showcase/microsoft-teams/",
+    ],
+)
+def test_company_pages_are_rejected_before_spending_an_actor_run(url):
+    """Leads paste company pages into the LinkedIn field constantly.
+
+    Passing one to the profile actor burns a run and returns nothing, which read as
+    'profile not found or private' — a misleading error that sends you debugging the
+    wrong thing.
+    """
+    result = _scrape(url)
+    assert not result.ok
+    assert "company page" in result.error
+
+
+def test_junk_urls_are_rejected():
+    result = _scrape("https://example.com/about")
+    assert not result.ok
+    assert "not a recognisable" in result.error
+
+
+def test_empty_url_is_not_an_error_state_worth_scraping():
+    assert _scrape("").error == "no LinkedIn URL provided"

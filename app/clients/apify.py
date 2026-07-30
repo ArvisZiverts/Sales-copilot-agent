@@ -139,9 +139,25 @@ def _flatten_linkedin(item: dict) -> str:
     return "\n".join(lines).strip()
 
 
+_COMPANY_URL = re.compile(r"linkedin\.com/(company|school|showcase)/", re.I)
+_PROFILE_URL = re.compile(r"linkedin\.com/in/", re.I)
+
+
 async def scrape_linkedin(client: httpx.AsyncClient, url: str) -> ScrapeResult:
     if not url:
         return ScrapeResult(ok=False, error="no LinkedIn URL provided")
+
+    # Leads paste company pages into a "LinkedIn URL" field constantly. The profile
+    # actor silently returns nothing for those, which surfaced as a misleading
+    # "profile not found or private". Say what actually happened instead, and don't
+    # spend an actor run discovering it.
+    if _COMPANY_URL.search(url):
+        return ScrapeResult(
+            ok=False,
+            error="company page, not a personal profile — profile scraper skipped",
+        )
+    if not _PROFILE_URL.search(url):
+        return ScrapeResult(ok=False, error="not a recognisable LinkedIn profile URL")
 
     settings = get_settings()
     try:
