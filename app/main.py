@@ -6,7 +6,7 @@ from fastapi import BackgroundTasks, FastAPI, Header, HTTPException, Request
 from app.clients.typeform import parse_form_response
 from app.config import get_settings
 from app.pipeline import process_lead
-from app.security import verify_typeform_signature
+from app.security import secret_fingerprint, verify_typeform_signature
 
 logging.basicConfig(
     level=logging.INFO,
@@ -38,6 +38,21 @@ def _already_processed(event_id: str) -> bool:
 @app.get("/health")
 async def health():
     return {"status": "ok"}
+
+
+@app.get("/debug/secret-fingerprint")
+async def secret_fingerprint_endpoint():
+    """Compare the secret this server holds against your local copy.
+
+    Returns a length and a truncated hash — never the secret. Run
+    `python -m scripts.secret_fingerprint` locally and compare the two strings:
+    identical means the deploy has the right secret, different means a bad paste.
+    """
+    settings = get_settings()
+    return {
+        "typeform_webhook_secret": secret_fingerprint(settings.typeform_webhook_secret),
+        "signature_verification": "disabled" if settings.allow_unsigned_webhooks else "enabled",
+    }
 
 
 @app.post("/webhook/typeform")
