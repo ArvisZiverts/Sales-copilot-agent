@@ -1,0 +1,97 @@
+# =============================================================================
+# ICP PROFILE  —  PLACEHOLDER, WRITTEN FOR TESTING
+# =============================================================================
+# Arvis: replace everything below with your real offer and ICP. This file is
+# injected into Claude's system prompt verbatim, so write it the way you'd brief
+# a new sales hire. No code changes needed — edit, save, redeploy.
+#
+# The scoring quality is bounded entirely by how specific this file is.
+# "good fit = growing companies" produces generic slop. "10-50 employees, runs
+# ops in spreadsheets, has a named person doing manual data entry" produces
+# scores you can act on.
+# =============================================================================
+
+company: "Sales Copilot Labs"
+
+what_we_sell: >
+  Done-for-you AI agent builds for B2B service businesses. We design, build, and
+  host custom automation agents — lead enrichment, CRM hygiene, proposal drafting,
+  inbound triage — that plug into the tools the client already uses (HubSpot,
+  Slack, Google Workspace, Airtable). Engagements are project-based: a 4–6 week
+  build at $8k–$25k, then an optional $1.5k/mo hosting-and-iteration retainer.
+  We are not a staffing agency and we do not sell seats of software.
+
+# What a great customer looks like. Be concrete — headcount, revenue, tooling,
+# and above all the PAIN. Pain is what makes a deal close.
+ideal_customer:
+  company_size: "10–150 employees"
+  revenue: "$1M–$30M ARR"
+  industries:
+    - B2B professional services (agencies, consultancies, accounting, legal ops)
+    - SaaS companies with a human-heavy sales or onboarding motion
+    - Recruiting and staffing firms
+    - Insurance and mortgage brokerages
+  buyer_persona: >
+    Founder, COO, or Head of Revenue Operations. Someone with budget authority
+    who personally feels the pain, not a junior researching vendors.
+  signals_of_strong_fit:
+    - Visible manual, repetitive workflow in their service delivery or sales motion
+    - Already uses a CRM (HubSpot, Pipedrive, Salesforce) — means data exists to work with
+    - Job postings or LinkedIn headcount showing ops/VA/admin hires (they're solving it with people)
+    - Has scaled headcount faster than revenue
+    - Talks publicly about AI, automation, or efficiency but has not shipped anything
+    - Clear, well-defined service offering (easier to automate a repeatable process)
+
+# Who to score low. Being explicit here is what stops the model handing out 7s
+# to everyone.
+poor_fit:
+  hard_disqualifiers:
+    - Solo operators / freelancers with no team (no budget, no process to automate)
+    - Pre-revenue startups and idea-stage founders
+    - Competing AI automation agencies (they build this themselves)
+    - Students, job seekers, and people whose LinkedIn shows no company affiliation
+    - B2C-only businesses (retail, restaurants, personal services) — our playbooks don't transfer
+  soft_negatives:
+    - Enterprise (500+ employees) — procurement cycle is longer than our engagement model
+    - Heavily regulated with no cloud tolerance (defense, some healthcare)
+    - Agencies that resell white-label AI — margin conflict
+    - No visible website content or an under-construction site (can't qualify them)
+
+# How the 1-10 scale is anchored. Without anchors the model drifts to 6-8.
+scoring_rubric:
+  "9-10": >
+    Textbook fit. Right size, right industry, obvious repetitive workflow we've
+    automated before, and a decision-maker filled out the form. Rep should call today.
+  "7-8": >
+    Strong fit on size and industry with a plausible automation use case, but one
+    unknown — unclear pain, or the contact may not be the decision-maker.
+  "5-6": >
+    Adjacent. Could work with a discovery call to find the use case, but nothing in
+    the data points at a specific problem we solve. Worth an email, not a call.
+  "3-4": >
+    Weak. Wrong size or wrong industry, or the use case would be a custom one-off
+    outside our playbooks. Nurture only.
+  "1-2": >
+    Hits a hard disqualifier. Do not spend rep time.
+
+# Voice for the icebreaker. Feed in a real one your reps use and the output
+# matches your team instead of sounding like a chatbot.
+icebreaker_guidance:
+  goal: >
+    One or two sentences a rep can say on a first call or paste into an email. It
+    must prove we actually looked at their business — reference something specific
+    and verifiable from their site or profile.
+  rules:
+    - Reference one concrete, specific detail (a named service, a recent post, a role change, a stated positioning)
+    - Connect that detail to a plausible automation opportunity — but do not pitch
+    - No flattery openers ("Love what you're building!", "Impressive growth!")
+    - No em-dashes, no exclamation marks, no "I noticed that..."
+    - Under 40 words. Conversational, peer-to-peer, not salesy
+    - If the scraped data is too thin to say anything specific, say so plainly
+      rather than inventing a detail
+  example_good: >
+    "You've got three different onboarding tracks listed for enterprise clients —
+    is someone on your team manually routing new accounts into the right one?"
+  example_bad: >
+    "I love what you're building at Acme! Your growth in the consulting space is
+    impressive and I think AI could really help you scale!"

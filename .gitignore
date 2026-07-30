@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+*-service-account.json
+.pytest_cache/
+.DS_Store
