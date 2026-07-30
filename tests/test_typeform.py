@@ -17,7 +17,7 @@ def test_parses_all_fields():
     assert lead.email == "dana@northgateops.com"
     assert lead.phone == "+15551234567"
     assert lead.website == "https://northgateops.com"
-    assert lead.linkedin_url == "https://www.linkedin.com/in/danawhitfield/"
+    assert lead.linkedin_url == "https://www.linkedin.com/in/example-lead-not-a-real-profile/"
     assert lead.is_enrichable()
 
 
@@ -46,7 +46,7 @@ def test_unrecognised_refs_fall_back_to_answer_type():
     lead = parse_form_response(payload)
     assert lead.email == "dana@northgateops.com"
     assert lead.phone == "+15551234567"
-    assert lead.linkedin_url == "https://www.linkedin.com/in/danawhitfield/"
+    assert lead.linkedin_url == "https://www.linkedin.com/in/example-lead-not-a-real-profile/"
     assert lead.website == "https://northgateops.com"
 
 

@@ -18,7 +18,7 @@ def lead():
         full_name="Dana Whitfield",
         email="dana@northgateops.com",
         website="https://northgateops.com",
-        linkedin_url="https://linkedin.com/in/danawhitfield",
+        linkedin_url="https://linkedin.com/in/example-lead-not-a-real-profile",
     )
 
 

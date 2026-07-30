@@ -39,7 +39,7 @@
       },
       {
         "type": "url",
-        "url": "https://www.linkedin.com/in/danawhitfield/",
+        "url": "https://www.linkedin.com/in/example-lead-not-a-real-profile/",
         "field": { "id": "f5", "ref": "linkedin_url", "type": "website" }
       }
     ]

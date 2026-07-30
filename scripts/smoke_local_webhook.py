@@ -48,11 +48,14 @@ def main() -> None:
     # Fresh event_id each run, or the idempotency cache rejects the second attempt.
     payload["event_id"] = f"smoke_{uuid.uuid4().hex[:12]}"
 
-    if args.website:
+    # `is not None`, not truthiness — passing an empty string is a deliberate
+    # "clear this field" (e.g. to exercise the website-only degradation path), and
+    # a falsy check would silently ignore it and send the fixture's value instead.
+    if args.website is not None:
         _set_answer(payload, "website", args.website)
-    if args.linkedin:
+    if args.linkedin is not None:
         _set_answer(payload, "linkedin_url", args.linkedin)
-    if args.name:
+    if args.name is not None:
         _set_answer(payload, "full_name", args.name)
 
     body = json.dumps(payload).encode()
